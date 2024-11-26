@@ -58,7 +58,7 @@ export class ProductsComponent extends PagedListingComponentBase<ProductDto> {
 
   delete(product: ProductDto): void {
     abp.message.confirm(
-      this.l('ProductDeleteWarningMessage', product.displayName),
+      this.l('ProductDeleteWarningMessage', product.name),
       undefined,
       (result: boolean) => {
         if (result) {

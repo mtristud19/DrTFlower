@@ -681,7 +681,7 @@ export class ProductServiceProxy {
      * @return OK
      */
     create(body: CreateProductDto | undefined): Observable<ProductDto> {
-        let url_ = this.baseUrl + "/api/services/app/Product/Create";
+        let url_ = this.baseUrl + "/api/services/app/Products/Create";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -737,7 +737,7 @@ export class ProductServiceProxy {
      * @return OK
      */
     getProducts(permission: string | undefined): Observable<ProductListDtoListResultDto> {
-        let url_ = this.baseUrl + "/api/services/app/Product/GetProducts?";
+        let url_ = this.baseUrl + "/api/services/app/Products/GetProducts?";
         if (permission === null)
             throw new Error("The parameter 'permission' cannot be null.");
         else if (permission !== undefined)
@@ -793,7 +793,7 @@ export class ProductServiceProxy {
      * @return OK
      */
     update(body: ProductDto | undefined): Observable<ProductDto> {
-        let url_ = this.baseUrl + "/api/services/app/Product/Update";
+        let url_ = this.baseUrl + "/api/services/app/Products/Update";
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -849,7 +849,7 @@ export class ProductServiceProxy {
      * @return OK
      */
     delete(id: number | undefined): Observable<void> {
-        let url_ = this.baseUrl + "/api/services/app/Product/Delete?";
+        let url_ = this.baseUrl + "/api/services/app/Products/Delete?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -952,7 +952,7 @@ export class ProductServiceProxy {
      * @return OK
      */
     getProductForEdit(id: number | undefined): Observable<GetProductForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Product/GetProductForEdit?";
+        let url_ = this.baseUrl + "/api/services/app/Products/GetProductForEdit?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -1008,7 +1008,7 @@ export class ProductServiceProxy {
      * @return OK
      */
     get(id: number | undefined): Observable<ProductDto> {
-        let url_ = this.baseUrl + "/api/services/app/Product/Get?";
+        let url_ = this.baseUrl + "/api/services/app/Products/Get?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -1066,7 +1066,7 @@ export class ProductServiceProxy {
      * @return OK
      */
     getAll(keyword: string | undefined, skipCount: number | undefined, maxResultCount: number | undefined): Observable<ProductDtoPagedResultDto> {
-        let url_ = this.baseUrl + "/api/services/app/Product/GetAll?";
+        let url_ = this.baseUrl + "/api/services/app/Products/GetAll?";
         if (keyword === null)
             throw new Error("The parameter 'keyword' cannot be null.");
         else if (keyword !== undefined)
@@ -2546,10 +2546,10 @@ export class CreateRoleDto implements ICreateRoleDto {
 }
 export class CreateProductDto implements ICreateProductDto {
     name: string;
-    displayName: string;
+    quantity: string;
     normalizedName: string | undefined;
     description: string | undefined;
-    grantedPermissions: string[] | undefined;
+    // grantedPermissions: string[] | undefined;
 
     constructor(data?: ICreateProductDto) {
         if (data) {
@@ -2563,14 +2563,14 @@ export class CreateProductDto implements ICreateProductDto {
     init(_data?: any) {
         if (_data) {
             this.name = _data["name"];
-            this.displayName = _data["displayName"];
+            this.quantity = _data["quantity"];
             this.normalizedName = _data["normalizedName"];
             this.description = _data["description"];
-            if (Array.isArray(_data["grantedPermissions"])) {
-                this.grantedPermissions = [] as any;
-                for (let item of _data["grantedPermissions"])
-                    this.grantedPermissions.push(item);
-            }
+            // if (Array.isArray(_data["grantedPermissions"])) {
+            //     this.grantedPermissions = [] as any;
+            //     for (let item of _data["grantedPermissions"])
+            //         this.grantedPermissions.push(item);
+            // }
         }
     }
 
@@ -2584,14 +2584,14 @@ export class CreateProductDto implements ICreateProductDto {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["name"] = this.name;
-        data["displayName"] = this.displayName;
+        data["quantity"] = this.quantity;
         data["normalizedName"] = this.normalizedName;
         data["description"] = this.description;
-        if (Array.isArray(this.grantedPermissions)) {
-            data["grantedPermissions"] = [];
-            for (let item of this.grantedPermissions)
-                data["grantedPermissions"].push(item);
-        }
+        // if (Array.isArray(this.grantedPermissions)) {
+        //     data["grantedPermissions"] = [];
+        //     for (let item of this.grantedPermissions)
+        //         data["grantedPermissions"].push(item);
+        // }
         return data;
     }
 
@@ -2612,10 +2612,10 @@ export interface ICreateRoleDto {
 }
 export interface ICreateProductDto {
     name: string;
-    displayName: string;
+    quantity: string;
     normalizedName: string | undefined;
     description: string | undefined;
-    grantedPermissions: string[] | undefined;
+    // grantedPermissions: string[] | undefined;
 }
 
 export class CreateTenantDto implements ICreateTenantDto {
@@ -3446,7 +3446,7 @@ export class RoleDto implements IRoleDto {
 export class ProductDto implements IProductDto {
     id: number;
     name: string;
-    displayName: string;
+    quantity: string;
     normalizedName: string | undefined;
     description: string | undefined;
     grantedPermissions: string[] | undefined;
@@ -3464,7 +3464,7 @@ export class ProductDto implements IProductDto {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
-            this.displayName = _data["displayName"];
+            this.quantity = _data["quantity"];
             this.normalizedName = _data["normalizedName"];
             this.description = _data["description"];
             if (Array.isArray(_data["grantedPermissions"])) {
@@ -3486,7 +3486,7 @@ export class ProductDto implements IProductDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
-        data["displayName"] = this.displayName;
+        data["quantity"] = this.quantity;
         data["normalizedName"] = this.normalizedName;
         data["description"] = this.description;
         if (Array.isArray(this.grantedPermissions)) {
@@ -3516,7 +3516,7 @@ export interface IRoleDto {
 export interface IProductDto {
     id: number;
     name: string;
-    displayName: string;
+    quantity: string;
     normalizedName: string | undefined;
     description: string | undefined;
     grantedPermissions: string[] | undefined;

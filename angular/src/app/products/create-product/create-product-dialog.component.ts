@@ -44,18 +44,18 @@ export class CreateProductDialogComponent extends AppComponentBase
       .getAllPermissions()
       .subscribe((result: PermissionDtoListResultDto) => {
         this.permissions = result.items;
-        this.setInitialPermissionsStatus();
+        // this.setInitialPermissionsStatus();
         this.cd.detectChanges();
       });
   }
 
-  setInitialPermissionsStatus(): void {
-    _map(this.permissions, (item) => {
-      this.checkedPermissionsMap[item.name] = this.isPermissionChecked(
-        item.name
-      );
-    });
-  }
+  // setInitialPermissionsStatus(): void {
+  //   _map(this.permissions, (item) => {
+  //     this.checkedPermissionsMap[item.name] = this.isPermissionChecked(
+  //       item.name
+  //     );
+  //   });
+  // }
 
   isPermissionChecked(permissionName: string): boolean {
     // just return default permission checked status
@@ -63,26 +63,26 @@ export class CreateProductDialogComponent extends AppComponentBase
     return this.defaultPermissionCheckedStatus;
   }
 
-  onPermissionChange(permission: PermissionDto, $event) {
-    this.checkedPermissionsMap[permission.name] = $event.target.checked;
-  }
+  // onPermissionChange(permission: PermissionDto, $event) {
+  //   this.checkedPermissionsMap[permission.name] = $event.target.checked;
+  // }
 
-  getCheckedPermissions(): string[] {
-    const permissions: string[] = [];
-    _forEach(this.checkedPermissionsMap, function (value, key) {
-      if (value) {
-        permissions.push(key);
-      }
-    });
-    return permissions;
-  }
+  // getCheckedPermissions(): string[] {
+  //   const permissions: string[] = [];
+  //   _forEach(this.checkedPermissionsMap, function (value, key) {
+  //     if (value) {
+  //       permissions.push(key);
+  //     }
+  //   });
+  //   return permissions;
+  // }
 
   save(): void {
     this.saving = true;
 
     const product = new CreateProductDto();
     product.init(this.product);
-    product.grantedPermissions = this.getCheckedPermissions();
+    // product.grantedPermissions = this.getCheckedPermissions();  
 
     this._productService
       .create(product)
