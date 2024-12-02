@@ -5,7 +5,7 @@
   (ngSubmit)="save()"
   >
   <abp-modal-header
-    [title]="'EditProduct' | localize"
+    [title]="'Edit product' | localize"
     (onCloseClick)="bsModalRef.hide()"
   ></abp-modal-header>
   <div class="modal-body">
@@ -35,29 +35,29 @@
             </div>
           </div>
           <div class="form-group row required">
-            <label class="col-md-3 col-form-label" for="displayName">
-              {{ "DisplayName" | localize }}
+            <label class="col-md-3 col-form-label" for="quantity">
+              {{ "Quantity" | localize }}
             </label>
             <div class="col-md-9">
               <input
                 type="text"
                 class="form-control"
-                name="displayName"
-                id="displayName"
+                name="quantity"
+                id="quantity"
                 required
                 minlength="2"
                 maxlength="32"
-                [(ngModel)]="product.displayName"
-                #displayNameModel="ngModel"
-                #displayNameEl
+                [(ngModel)]="product.quantity"
+                #quantityModel="ngModel"
+                #quantityEl
                 />
                 <abp-validation-summary
-                  [control]="displayNameModel"
-                  [controlEl]="displayNameEl"
+                  [control]="quantityModel"
+                  [controlEl]="quantityEl"
                 ></abp-validation-summary>
               </div>
             </div>
-            <div class="form-group row mb-0">
+            <!-- <div class="form-group row mb-0">
               <label class="col-md-3 col-form-label" for="description">
                 {{ "ProductDescription" | localize }}
               </label>
@@ -71,9 +71,9 @@
                   >
                 </textarea>
               </div>
-            </div>
+            </div> -->
           </tab>
-          <tab [heading]="'Permissions' | localize" class="pt-3 px-2">
+          <!-- <tab [heading]="'Permissions' | localize" class="pt-3 px-2">
             <div class="form-group row mb-0">
               @for (permission of permissions; track permission; let i = $index) {
                 <div class="col-md-6">
@@ -87,13 +87,13 @@
                       (change)="onPermissionChange(permission, $event)"
                       />
                       <label class="custom-control-label" [for]="'permission_' + i">
-                        {{ permission.displayName }}
+                        {{ permission.quantity }}
                       </label>
                     </div>
                   </div>
                 }
               </div>
-            </tab>
+            </tab> -->
           </tabset>
         </div>
         <abp-modal-footer

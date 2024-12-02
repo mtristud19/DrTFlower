@@ -952,7 +952,7 @@ export class ProductServiceProxy {
      * @return OK
      */
     getProductForEdit(id: number | undefined): Observable<GetProductForEditOutput> {
-        let url_ = this.baseUrl + "/api/services/app/Products/GetProductForEdit?";
+        let url_ = this.baseUrl + "/api/services/app/Products/Get?";
         if (id === null)
             throw new Error("The parameter 'id' cannot be null.");
         else if (id !== undefined)
@@ -992,6 +992,7 @@ export class ProductServiceProxy {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            console.log(resultData200)
             result200 = GetProductForEditOutput.fromJS(resultData200);
             return _observableOf(result200);
             }));
@@ -2916,8 +2917,6 @@ export class GetRoleForEditOutput implements IGetRoleForEditOutput {
 }
 export class GetProductForEditOutput implements IGetProductForEditOutput {
     product: ProductEditDto;
-    permissions: FlatPermissionDto[] | undefined;
-    grantedPermissionNames: string[] | undefined;
 
     constructor(data?: IGetProductForEditOutput) {
         if (data) {
@@ -2931,16 +2930,16 @@ export class GetProductForEditOutput implements IGetProductForEditOutput {
     init(_data?: any) {
         if (_data) {
             this.product = _data["product"] ? ProductEditDto.fromJS(_data["product"]) : <any>undefined;
-            if (Array.isArray(_data["permissions"])) {
-                this.permissions = [] as any;
-                for (let item of _data["permissions"])
-                    this.permissions.push(FlatPermissionDto.fromJS(item));
-            }
-            if (Array.isArray(_data["grantedPermissionNames"])) {
-                this.grantedPermissionNames = [] as any;
-                for (let item of _data["grantedPermissionNames"])
-                    this.grantedPermissionNames.push(item);
-            }
+            // if (Array.isArray(_data["permissions"])) {
+            //     this.permissions = [] as any;
+            //     for (let item of _data["permissions"])
+            //         this.permissions.push(FlatPermissionDto.fromJS(item));
+            // }
+            // if (Array.isArray(_data["grantedPermissionNames"])) {
+            //     this.grantedPermissionNames = [] as any;
+            //     for (let item of _data["grantedPermissionNames"])
+            //         this.grantedPermissionNames.push(item);
+            // }
         }
     }
 
@@ -2954,16 +2953,16 @@ export class GetProductForEditOutput implements IGetProductForEditOutput {
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
         data["product"] = this.product ? this.product.toJSON() : <any>undefined;
-        if (Array.isArray(this.permissions)) {
-            data["permissions"] = [];
-            for (let item of this.permissions)
-                data["permissions"].push(item.toJSON());
-        }
-        if (Array.isArray(this.grantedPermissionNames)) {
-            data["grantedPermissionNames"] = [];
-            for (let item of this.grantedPermissionNames)
-                data["grantedPermissionNames"].push(item);
-        }
+        // if (Array.isArray(this.permissions)) {
+        //     data["permissions"] = [];
+        //     for (let item of this.permissions)
+        //         data["permissions"].push(item.toJSON());
+        // }
+        // if (Array.isArray(this.grantedPermissionNames)) {
+        //     data["grantedPermissionNames"] = [];
+        //     for (let item of this.grantedPermissionNames)
+        //         data["grantedPermissionNames"].push(item);
+        // }
         return data;
     }
 
@@ -2982,8 +2981,6 @@ export interface IGetRoleForEditOutput {
 }
 export interface IGetProductForEditOutput {
     product: ProductEditDto;
-    permissions: FlatPermissionDto[] | undefined;
-    grantedPermissionNames: string[] | undefined;
 }
 
 export class Int64EntityDto implements IInt64EntityDto {
@@ -3447,9 +3444,6 @@ export class ProductDto implements IProductDto {
     id: number;
     name: string;
     quantity: string;
-    normalizedName: string | undefined;
-    description: string | undefined;
-    grantedPermissions: string[] | undefined;
 
     constructor(data?: IProductDto) {
         if (data) {
@@ -3465,13 +3459,6 @@ export class ProductDto implements IProductDto {
             this.id = _data["id"];
             this.name = _data["name"];
             this.quantity = _data["quantity"];
-            this.normalizedName = _data["normalizedName"];
-            this.description = _data["description"];
-            if (Array.isArray(_data["grantedPermissions"])) {
-                this.grantedPermissions = [] as any;
-                for (let item of _data["grantedPermissions"])
-                    this.grantedPermissions.push(item);
-            }
         }
     }
 
@@ -3487,13 +3474,6 @@ export class ProductDto implements IProductDto {
         data["id"] = this.id;
         data["name"] = this.name;
         data["quantity"] = this.quantity;
-        data["normalizedName"] = this.normalizedName;
-        data["description"] = this.description;
-        if (Array.isArray(this.grantedPermissions)) {
-            data["grantedPermissions"] = [];
-            for (let item of this.grantedPermissions)
-                data["grantedPermissions"].push(item);
-        }
         return data;
     }
 
@@ -3517,9 +3497,6 @@ export interface IProductDto {
     id: number;
     name: string;
     quantity: string;
-    normalizedName: string | undefined;
-    description: string | undefined;
-    grantedPermissions: string[] | undefined;
 }
 
 export class RoleDtoListResultDto implements IRoleDtoListResultDto {
@@ -3734,9 +3711,7 @@ export class RoleEditDto implements IRoleEditDto {
 export class ProductEditDto implements IProductEditDto {
     id: number;
     name: string;
-    displayName: string;
-    description: string | undefined;
-    isStatic: boolean;
+    quantity: string;
 
     constructor(data?: IProductEditDto) {
         if (data) {
@@ -3751,9 +3726,7 @@ export class ProductEditDto implements IProductEditDto {
         if (_data) {
             this.id = _data["id"];
             this.name = _data["name"];
-            this.displayName = _data["displayName"];
-            this.description = _data["description"];
-            this.isStatic = _data["isStatic"];
+            this.quantity = _data["quantity"];
         }
     }
 
@@ -3768,9 +3741,7 @@ export class ProductEditDto implements IProductEditDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["name"] = this.name;
-        data["displayName"] = this.displayName;
-        data["description"] = this.description;
-        data["isStatic"] = this.isStatic;
+        data["quantity"] = this.quantity;
         return data;
     }
 
@@ -3792,9 +3763,7 @@ export interface IRoleEditDto {
 export interface IProductEditDto {
     id: number;
     name: string;
-    displayName: string;
-    description: string | undefined;
-    isStatic: boolean;
+    quantity: string;
 }
 
 export class RoleListDto implements IRoleListDto {

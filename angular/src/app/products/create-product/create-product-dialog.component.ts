@@ -40,13 +40,13 @@ export class CreateProductDialogComponent extends AppComponentBase
   }
 
   ngOnInit(): void {
-    this._productService
-      .getAllPermissions()
-      .subscribe((result: PermissionDtoListResultDto) => {
-        this.permissions = result.items;
-        // this.setInitialPermissionsStatus();
-        this.cd.detectChanges();
-      });
+    // this._productService
+    //   .getAllPermissions()
+    //   .subscribe((result: PermissionDtoListResultDto) => {
+    //     this.permissions = result.items;
+    //     // this.setInitialPermissionsStatus();
+    //     this.cd.detectChanges();
+    //   });
   }
 
   // setInitialPermissionsStatus(): void {

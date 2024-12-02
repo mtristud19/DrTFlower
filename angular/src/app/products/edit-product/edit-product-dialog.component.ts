@@ -26,9 +26,6 @@ export class EditProductDialogComponent extends AppComponentBase
   saving = false;
   id: number;
   product = new ProductEditDto();
-  permissions: FlatPermissionDto[];
-  grantedPermissionNames: string[];
-  checkedPermissionsMap: { [key: string]: boolean } = {};
 
   @Output() onSave = new EventEmitter<any>();
 
@@ -42,53 +39,48 @@ export class EditProductDialogComponent extends AppComponentBase
   }
 
   ngOnInit(): void {
-    this._productService
-      .getProductForEdit(this.id)
-      .subscribe((result: GetProductForEditOutput) => {
-        this.product = result.product;
-        this.permissions = result.permissions;
-        this.grantedPermissionNames = result.grantedPermissionNames;
-        this.setInitialPermissionsStatus();
-        this.cd.detectChanges();
-      });
-  }
-
-  setInitialPermissionsStatus(): void {
-    _map(this.permissions, (item) => {
-      this.checkedPermissionsMap[item.name] = this.isPermissionChecked(
-        item.name
-      );
+    this._productService.get(this.id).subscribe((result: ProductDto) => {
+      this.product = result;
+      this.cd.detectChanges();
     });
   }
 
-  isPermissionChecked(permissionName: string): boolean {
-    return _includes(this.grantedPermissionNames, permissionName);
-  }
+  // setInitialPermissionsStatus(): void {
+  //   _map(this.permissions, (item) => {
+  //     this.checkedPermissionsMap[item.name] = this.isPermissionChecked(
+  //       item.name
+  //     );
+  //   });
+  // }
 
-  onPermissionChange(permission: FlatPermissionDto, $event) {
-    this.checkedPermissionsMap[permission.name] = $event.target.checked;
-  }
+  // isPermissionChecked(permissionName: string): boolean {
+  //   return _includes(this.grantedPermissionNames, permissionName);
+  // }
 
-  getCheckedPermissions(): string[] {
-    const permissions: string[] = [];
-    _forEach(this.checkedPermissionsMap, function (value, key) {
-      if (value) {
-        permissions.push(key);
-      }
-    });
-    return permissions;
-  }
+  // onPermissionChange(permission: FlatPermissionDto, $event) {
+  //   this.checkedPermissionsMap[permission.name] = $event.target.checked;
+  // }
+
+  // getCheckedPermissions(): string[] {
+  //   const permissions: string[] = [];
+  //   _forEach(this.checkedPermissionsMap, function (value, key) {
+  //     if (value) {
+  //       permissions.push(key);
+  //     }
+  //   });
+  //   return permissions;
+  // }
 
   save(): void {
     this.saving = true;
 
     const product = new ProductDto();
     product.init(this.product);
-    product.grantedPermissions = this.getCheckedPermissions();
+    // product.grantedPermissions = this.getCheckedPermissions();
 
     this._productService.update(product).subscribe(
       () => {
-        this.notify.info(this.l('SavedSuccessfully'));
+        this.notify.info(this.l('Saved successfully'));
         this.bsModalRef.hide();
         this.onSave.emit();
       },
