@@ -1,12 +1,14 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
+using System.ComponentModel.DataAnnotations;
 
-namespace DrTFlower.Products
+namespace DrTFlower.Products.Dto
 {
-    public class ProductDto : EntityDto<int>
+    public class ProductsDto : EntityDto
     {
-        [AutoMapFrom(typeof(Product))]
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Quantity { get; set; }
     }
 }
