@@ -9,7 +9,7 @@ namespace DrTFlower.EntityFrameworkCore
 {
     public class DrTFlowerDbContext : AbpZeroDbContext<Tenant, Role, User, DrTFlowerDbContext>
     {
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Products.Products> Products { get; set; }
 
         /* Define a DbSet for each entity of the application */
         
